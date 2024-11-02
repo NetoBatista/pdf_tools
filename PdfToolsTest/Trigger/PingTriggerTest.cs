@@ -19,7 +19,7 @@ public class PingTriggerTest
         var request =new Mock<HttpRequest>();
         var route = new PingTrigger();
         var response = route.Run(request.Object);
-        Assert.AreSame(typeof (NoContentResult), response.GetType());
+        Assert.AreSame(typeof (OkResult), response.GetType());
     }
     
 }

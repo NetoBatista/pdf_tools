@@ -9,6 +9,6 @@ public class PingTrigger
     [Function("Ping")]
     public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req)
     {
-       return new NoContentResult();
+       return new OkResult();
     }
 }
