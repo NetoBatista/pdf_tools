@@ -3,20 +3,19 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using PdfTools;
+using PdfTools.Trigger;
 using PdfTools.Dto;
 using PdfTools.Interface;
 using PdfTools.Model;
-using PdfTools.Service;
 
-namespace PdfToolsTest.Route;
+namespace PdfToolsTest.Trigger;
 
 [TestClass]
-public class HtmlToPdfTest
+public class HtmlToPdfTriggerTest
 {
-    public HtmlToPdf CreateRoute(IHtmlToPdfService htmlToPdfService)
+    public HtmlToPdfTrigger CreateRoute(IHtmlToPdfService htmlToPdfService)
     {
-        return new HtmlToPdf(htmlToPdfService);
+        return new HtmlToPdfTrigger(htmlToPdfService);
     }
     
     [TestMethod("Should be convert html to pdf")]

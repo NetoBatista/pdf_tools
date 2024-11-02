@@ -8,18 +8,18 @@ using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Service;
 
-namespace PdfTools
+namespace PdfTools.Trigger
 {
-    public class HtmlToPdf
+    public class HtmlToPdfTrigger
     {
         private readonly IHtmlToPdfService _htmlToPdfService;
 
-        public HtmlToPdf(IHtmlToPdfService htmlToPdfService)
+        public HtmlToPdfTrigger(IHtmlToPdfService htmlToPdfService)
         {
             _htmlToPdfService = htmlToPdfService;
         }
 
-        [Function("HtmlToPdf")]
+        [Function("HtmlToPdfTrigger")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
         {
             var request = await req.GetBody<HtmlToPdfRequestDto>();
