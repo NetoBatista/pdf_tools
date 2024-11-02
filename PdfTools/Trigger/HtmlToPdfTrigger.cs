@@ -19,7 +19,7 @@ namespace PdfTools.Trigger
             _htmlToPdfService = htmlToPdfService;
         }
 
-        [Function("HtmlToPdfTrigger")]
+        [Function("HtmlToPdf")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
         {
             var request = await req.GetBody<HtmlToPdfRequestDto>();
