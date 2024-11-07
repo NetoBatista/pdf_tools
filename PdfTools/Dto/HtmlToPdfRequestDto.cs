@@ -14,7 +14,5 @@ public class HtmlToPdfRequestDto
         {
             throw new HtmlToPdfRequestException("Content is required");
         }
-        
-        
     }
 }

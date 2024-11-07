@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using iText.Html2pdf;
-using iText.Kernel.Pdf;
 using Microsoft.Extensions.Logging;
 using PdfTools.Dto;
 using PdfTools.Extension;
