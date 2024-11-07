@@ -13,6 +13,11 @@ public class PdfToTextRequestDto
         {
             throw new PdfToTextRequestException("File not found"); 
         }
+
+        if (!IsBase64FileSizeUnderLimit(File))
+        {
+            throw new PdfToTextRequestException("File size greater than 50MB"); 
+        }
         
         var pdfBytes = Convert.FromBase64String(File);
 
@@ -24,10 +29,17 @@ public class PdfToTextRequestDto
         var header = Encoding.ASCII.GetString(pdfBytes, 0, 4).Trim();
         var footer = Encoding.ASCII.GetString(pdfBytes, pdfBytes.Length - 5, 5).Trim();
 
-        var isValid =  header == "%PDF" && footer == "%EOF";
+        var isValid =  header.ToUpper().Contains("PDF") && footer.ToUpper().Contains("EOF");
         if (!isValid)
         {
             throw new PdfToTextRequestException("File is not a valid PDF");
         }
+    }
+    
+    private bool IsBase64FileSizeUnderLimit(string base64String, int maxFileSizeInMB = 50)
+    {
+        long maxFileSizeInBytes = maxFileSizeInMB * 1024 * 1024;
+        long fileSizeInBytes = (long)(base64String.Length * 3 / 4);
+        return fileSizeInBytes <= maxFileSizeInBytes;
     }
 }
