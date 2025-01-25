@@ -31,7 +31,7 @@ public class PdfToTextServiceTest
         var request = CreateRequest();
         var service = CreateService();
 
-        var response = service.ExtractTextFromPdf(request);
+        var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
     }
     
@@ -42,7 +42,7 @@ public class PdfToTextServiceTest
         request.File = string.Empty;
         var service = CreateService();
 
-        var response = service.ExtractTextFromPdf(request);
+        var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
     }
     
@@ -53,7 +53,7 @@ public class PdfToTextServiceTest
         request.File = ExampleImage;
         var service = CreateService();
 
-        var response = service.ExtractTextFromPdf(request);
+        var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
     }
 }

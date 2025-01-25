@@ -10,6 +10,7 @@ var host = new HostBuilder()
     {
         services.AddTransient<IHtmlToPdfService, HtmlToPdfService>();
         services.AddTransient<IPdfToTextService, PdfToTextService>();
+        services.AddTransient<IContentToPdfService, ContentToPdfService>();
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
     })

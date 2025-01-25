@@ -27,7 +27,7 @@ namespace PdfTools.Trigger
             {
                 return new BadRequestResult();
             }
-            var response = _pdfToTextService.ExtractTextFromPdf(request);
+            var response = _pdfToTextService.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return new OkObjectResult(response.Data);

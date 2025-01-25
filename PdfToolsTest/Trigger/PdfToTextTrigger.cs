@@ -25,7 +25,7 @@ public class PdfToTextTriggerTest
         request.Setup(x => x.Body)
                .Returns(new MemoryStream(Encoding.UTF8.GetBytes("{}")));
         var pdfToTextService = new Mock<IPdfToTextService>();
-        pdfToTextService.Setup(x => x.ExtractTextFromPdf(It.IsAny<PdfToTextRequestDto>()))
+        pdfToTextService.Setup(x => x.Execute(It.IsAny<PdfToTextRequestDto>()))
                             .Returns(new ResponseBaseModel(HttpStatusCode.OK, Encoding.Unicode.GetBytes("abc")));
         var route = CreateRoute(pdfToTextService.Object);
         var response = await route.Run(request.Object);
@@ -39,7 +39,7 @@ public class PdfToTextTriggerTest
         request.Setup(x => x.Body)
                .Returns(new MemoryStream(Encoding.UTF8.GetBytes("{}")));
         var htmlToPdfServiceMock = new Mock<IPdfToTextService>();
-        htmlToPdfServiceMock.Setup(x => x.ExtractTextFromPdf(It.IsAny<PdfToTextRequestDto>()))
+        htmlToPdfServiceMock.Setup(x => x.Execute(It.IsAny<PdfToTextRequestDto>()))
                             .Returns(new ResponseBaseModel(HttpStatusCode.BadRequest, "Error"));
         var route = CreateRoute(htmlToPdfServiceMock.Object);
         var response = await route.Run(request.Object);

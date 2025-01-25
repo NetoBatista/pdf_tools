@@ -13,7 +13,7 @@ public class HtmlToPdfServiceTest
     {
         return  new HtmlToPdfRequestDto
         {
-            Content = "<!DOCTYPEhtml><htmllang=\\\"en-US\\\"><head><metacharset=\\\"UTF-8\\\"><metaname=\\\"viewport\\\"content=\\\"width=device-width,initial-scale=1.0\\\"></head><body><h1>Hello {userName}</h1></body></html>",
+            Content = "<html><head><metacharset=\"UTF-8\"><metaname=\"viewport\"content=\"width=device-width,initial-scale=1.0\"></head><body><h1>Hello{userName}</h1></body></html>",
             Variables =
             [
                 new HtmlToPdfVariableRequestDto
@@ -36,7 +36,7 @@ public class HtmlToPdfServiceTest
     {
         var request = CreateRequest();
         var service = CreateService();
-        var response = service.ConvertHtmlToPdf(request);
+        var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
     }
     
@@ -46,7 +46,7 @@ public class HtmlToPdfServiceTest
         var request = CreateRequest();
         request.Content = string.Empty;
         var service = CreateService();
-        var response = service.ConvertHtmlToPdf(request);
+        var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
     }
     
@@ -56,7 +56,7 @@ public class HtmlToPdfServiceTest
         var request = CreateRequest();
         request.Variables.First().Value = string.Empty;
         var service = CreateService();
-        var response = service.ConvertHtmlToPdf(request);
+        var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
     }
     

@@ -25,7 +25,7 @@ public class HtmlToPdfTriggerTest
         request.Setup(x => x.Body)
             .Returns(new MemoryStream(Encoding.UTF8.GetBytes("{}")));
         var htmlToPdfServiceMock = new Mock<IHtmlToPdfService>();
-        htmlToPdfServiceMock.Setup(x => x.ConvertHtmlToPdf(It.IsAny<HtmlToPdfRequestDto>()))
+        htmlToPdfServiceMock.Setup(x => x.Execute(It.IsAny<HtmlToPdfRequestDto>()))
                             .Returns(new ResponseBaseModel(HttpStatusCode.OK, Encoding.Unicode.GetBytes("abc")));
         var route = CreateRoute(htmlToPdfServiceMock.Object);
         var response = await route.Run(request.Object);
@@ -39,7 +39,7 @@ public class HtmlToPdfTriggerTest
         request.Setup(x => x.Body)
                .Returns(new MemoryStream(Encoding.UTF8.GetBytes("{}")));
         var htmlToPdfServiceMock = new Mock<IHtmlToPdfService>();
-        htmlToPdfServiceMock.Setup(x => x.ConvertHtmlToPdf(It.IsAny<HtmlToPdfRequestDto>()))
+        htmlToPdfServiceMock.Setup(x => x.Execute(It.IsAny<HtmlToPdfRequestDto>()))
                             .Returns(new ResponseBaseModel(HttpStatusCode.BadRequest, "Error"));
         var route = CreateRoute(htmlToPdfServiceMock.Object);
         var response = await route.Run(request.Object);

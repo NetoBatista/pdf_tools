@@ -17,7 +17,7 @@ public class HtmlToPdfService: IHtmlToPdfService
         _logger = logger;
     }
     
-    public ResponseBaseModel ConvertHtmlToPdf(HtmlToPdfRequestDto request)
+    public ResponseBaseModel Execute(HtmlToPdfRequestDto request)
     {
         try
         {

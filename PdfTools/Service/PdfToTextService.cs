@@ -20,13 +20,13 @@ public class PdfToTextService : IPdfToTextService
         _logger = logger;
     }
 
-    public ResponseBaseModel ExtractTextFromPdf(PdfToTextRequestDto requestDto)
+    public ResponseBaseModel Execute(PdfToTextRequestDto request)
     {
         try
         {
-            requestDto.Validate();
+            request.Validate();
             
-            var pdfBytes = Convert.FromBase64String(requestDto.File);
+            var pdfBytes = Convert.FromBase64String(request.File);
             var pdfReader = new PdfReader(new System.IO.MemoryStream(pdfBytes));
             var pdfDocument = new PdfDocument(pdfReader);
             var textExtractionStrategy = new SimpleTextExtractionStrategy();

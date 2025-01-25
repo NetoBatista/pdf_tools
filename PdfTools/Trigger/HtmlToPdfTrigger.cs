@@ -27,7 +27,7 @@ namespace PdfTools.Trigger
             {
                 return new BadRequestResult();
             }
-            var response = _htmlToPdfService.ConvertHtmlToPdf(request);
+            var response = _htmlToPdfService.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return new FileContentResult((byte[])response.Data, "application/pdf");

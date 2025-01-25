@@ -5,5 +5,5 @@ namespace PdfTools.Interface;
 
 public interface IPdfToTextService
 {
-    ResponseBaseModel ExtractTextFromPdf(PdfToTextRequestDto requestDto);
+    ResponseBaseModel Execute(PdfToTextRequestDto request);
 }
