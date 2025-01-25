@@ -25,9 +25,9 @@ public class ItemContentToPdfRequestDto
     
     public int? FontSize { get; set; }
     
-    public double? ImageHeight { get; set; }
+    public string? ImageHeight { get; set; }
     
-    public double? ImageWidth { get; set; }
+    public string? ImageWidth { get; set; }
     
     public void Validate()
     {

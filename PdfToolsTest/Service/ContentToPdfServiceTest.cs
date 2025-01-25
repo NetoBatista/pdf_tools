@@ -22,8 +22,8 @@ public class ContentToPdfServiceTest
                 {
                     Value = "https://jbsnstorage.blob.core.windows.net/public/loremipsum/loremipsum.jpg",
                     Type = TypeContentToPdfConstant.Image,
-                    ImageHeight = 120,
-                    ImageWidth = 700
+                    ImageHeight = "120",
+                    ImageWidth = "100%"
                 },
                 new ItemContentToPdfRequestDto
                 {

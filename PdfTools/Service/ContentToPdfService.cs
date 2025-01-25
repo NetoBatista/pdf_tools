@@ -40,8 +40,8 @@ public class ContentToPdfService: IContentToPdfService
                 item.Append("<div style='padding-top:8px;'>");
                 if (content.Type == TypeContentToPdfConstant.Image)
                 {
-                    var height = content.ImageHeight ?? 32;
-                    var width = content.ImageWidth ?? 32;
+                    var height = content.ImageHeight ?? "32px";
+                    var width = content.ImageWidth ?? "32px";
                     item.Append($"<img src='{content.Value}' height='{height}' width='{width}'/>");
                 }
                 else
