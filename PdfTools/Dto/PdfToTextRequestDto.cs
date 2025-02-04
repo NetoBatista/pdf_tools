@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
+using PdfTools.Constant;
 using PdfTools.Extension;
 
 namespace PdfTools.Dto;
@@ -6,12 +8,35 @@ namespace PdfTools.Dto;
 public class PdfToTextRequestDto
 {
     public string File { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
 
     public void Validate()
     {
         if (string.IsNullOrEmpty(File))
         {
             throw new PdfToTextRequestException("File not found"); 
+        }
+        
+        if (string.IsNullOrEmpty(Type))
+        {
+            throw new PdfToTextRequestException("Type not found"); 
+        }
+        
+        if (Type != TypePdfToTextConstant.Base64 && Type != TypePdfToTextConstant.Url)
+        {
+            throw new PdfToTextRequestException("Invalid type"); 
+        }
+
+        if (Type == TypePdfToTextConstant.Url && !Uri.TryCreate(File, UriKind.Absolute, out var _))
+        {
+            throw new PdfToTextRequestException("Invalid url");
+        }
+
+        if (Type == TypePdfToTextConstant.Url)
+        {
+            var client = new HttpClient();
+            var bytes = client.GetByteArrayAsync(File).Result;
+            File = Convert.ToBase64String(bytes);
         }
 
         if (!IsBase64FileSizeUnderLimit(File))
