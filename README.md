@@ -1,6 +1,6 @@
 # PdfTools
 
-PdfTools é uma ferramenta desenvolvida em .NET com duas funcionalidades principais:
+PdfTools é uma ferramenta desenvolvida em .NET para trabalhar com arquivos pdf.
 
 ## ✨ Funcionalidades
 
