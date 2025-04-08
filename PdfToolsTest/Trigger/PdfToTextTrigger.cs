@@ -1,12 +1,12 @@
-﻿using System.Net;
-using System.Text;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using PdfTools.Trigger;
 using PdfTools.Dto;
 using PdfTools.Interface;
 using PdfTools.Model;
+using PdfTools.Trigger;
+using System.Net;
+using System.Text;
 
 namespace PdfToolsTest.Trigger;
 
@@ -17,7 +17,7 @@ public class PdfToTextTriggerTest
     {
         return new PdfToTextTrigger(pdfToTextService);
     }
-    
+
     [TestMethod("Should be convert pdf to text")]
     public async Task ConvertPdfToText()
     {
@@ -29,13 +29,13 @@ public class PdfToTextTriggerTest
                             .Returns(new ResponseBaseModel(HttpStatusCode.OK, Encoding.Unicode.GetBytes("abc")));
         var route = CreateRoute(pdfToTextService.Object);
         var response = await route.Run(request.Object);
-        Assert.AreSame(typeof (OkObjectResult), response.GetType());
+        Assert.AreSame(typeof(OkObjectResult), response.GetType());
     }
-    
+
     [TestMethod("Should not be convert pdf to text - bad request service")]
     public async Task ConvertPdfToTextBadRequestService()
     {
-        var request =new Mock<HttpRequest>();
+        var request = new Mock<HttpRequest>();
         request.Setup(x => x.Body)
                .Returns(new MemoryStream(Encoding.UTF8.GetBytes("{}")));
         var htmlToPdfServiceMock = new Mock<IPdfToTextService>();
@@ -43,6 +43,6 @@ public class PdfToTextTriggerTest
                             .Returns(new ResponseBaseModel(HttpStatusCode.BadRequest, "Error"));
         var route = CreateRoute(htmlToPdfServiceMock.Object);
         var response = await route.Run(request.Object);
-        Assert.AreSame(typeof (BadRequestObjectResult), response.GetType());
+        Assert.AreSame(typeof(BadRequestObjectResult), response.GetType());
     }
 }

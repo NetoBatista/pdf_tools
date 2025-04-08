@@ -1,9 +1,9 @@
-﻿using System.Net;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 using PdfTools.Constant;
 using PdfTools.Dto;
 using PdfTools.Service;
+using System.Net;
 
 namespace PdfToolsTest.Service;
 

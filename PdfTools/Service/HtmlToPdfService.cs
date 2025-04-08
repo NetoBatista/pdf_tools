@@ -1,14 +1,14 @@
-﻿using System.Net;
-using iText.Html2pdf;
+﻿using iText.Html2pdf;
 using Microsoft.Extensions.Logging;
 using PdfTools.Dto;
 using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Model;
+using System.Net;
 
 namespace PdfTools.Service;
 
-public class HtmlToPdfService: IHtmlToPdfService
+public class HtmlToPdfService : IHtmlToPdfService
 {
     private readonly ILogger<HtmlToPdfService> _logger;
 
@@ -16,7 +16,7 @@ public class HtmlToPdfService: IHtmlToPdfService
     {
         _logger = logger;
     }
-    
+
     public ResponseBaseModel Execute(HtmlToPdfRequestDto request)
     {
         try

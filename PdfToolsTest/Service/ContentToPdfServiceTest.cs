@@ -1,11 +1,11 @@
-﻿using System.Net;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 using PdfTools.Constant;
 using PdfTools.Dto;
 using PdfTools.Interface;
 using PdfTools.Model;
 using PdfTools.Service;
+using System.Net;
 
 namespace PdfToolsTest.Service;
 
@@ -38,7 +38,7 @@ public class ContentToPdfServiceTest
     {
         var loggerMock = new Mock<ILogger<ContentToPdfService>>();
         htmlToPdfService ??= new Mock<IHtmlToPdfService>().Object;
-        return new ContentToPdfService(loggerMock.Object, htmlToPdfService); 
+        return new ContentToPdfService(loggerMock.Object, htmlToPdfService);
     }
 
     [TestMethod("Should be convert content to pdf")]
@@ -52,7 +52,7 @@ public class ContentToPdfServiceTest
         var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
     }
-    
+
     [TestMethod("Should not be convert content to pdf value empty")]
     public void NotConvertHtmlToPdfValueEmpty()
     {
@@ -62,16 +62,16 @@ public class ContentToPdfServiceTest
             {
                 new ItemContentToPdfRequestDto
                 {
-                    
+
                 }
             }
         };
         var service = CreateService();
-        
+
         var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
     }
-    
+
     [TestMethod("Should not be convert content to pdf invalid type")]
     public void NotConvertHtmlToPdfInvalidType()
     {
@@ -89,7 +89,7 @@ public class ContentToPdfServiceTest
         var response = service.Execute(request);
         Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
     }
-    
+
     [TestMethod("Should not be convert content to pdf error convert")]
     public void NotConvertHtmlToPdfSuccessErrorConvert()
     {

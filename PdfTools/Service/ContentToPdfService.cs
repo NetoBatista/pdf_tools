@@ -1,16 +1,15 @@
-﻿using System.Net;
-using System.Text;
-using iText.Html2pdf;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using PdfTools.Constant;
 using PdfTools.Dto;
 using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Model;
+using System.Net;
+using System.Text;
 
 namespace PdfTools.Service;
 
-public class ContentToPdfService: IContentToPdfService
+public class ContentToPdfService : IContentToPdfService
 {
     private readonly ILogger<ContentToPdfService> _logger;
     private readonly IHtmlToPdfService _htmlToPdfService;
@@ -20,7 +19,7 @@ public class ContentToPdfService: IContentToPdfService
         _logger = logger;
         _htmlToPdfService = htmlToPdfService;
     }
-    
+
     public ResponseBaseModel Execute(ContentToPdfRequestDto request)
     {
         try
@@ -29,7 +28,7 @@ public class ContentToPdfService: IContentToPdfService
             {
                 return new ResponseBaseModel(HttpStatusCode.NoContent, string.Empty);
             }
-            
+
             request.Validate();
 
             List<string> elements = [];
@@ -45,7 +44,7 @@ public class ContentToPdfService: IContentToPdfService
                     item.Append($"<img src='{content.Value}' height='{height}' width='{width}'/>");
                 }
                 else
-                { 
+                {
                     var fontSize = content.FontSize ?? 12;
                     item.Append($"<span style='font-size:{fontSize}px'>{content.Value}</span>");
                 }
@@ -55,7 +54,7 @@ public class ContentToPdfService: IContentToPdfService
 
             var template = TemplateHtml();
             template = template.Replace("{content}", string.Join(Environment.NewLine, elements));
-            
+
             var htmlToPdfRequest = new HtmlToPdfRequestDto
             {
                 Content = template

@@ -1,6 +1,4 @@
-﻿using PdfTools.Extension;
-
-namespace PdfTools.Dto;
+﻿namespace PdfTools.Dto;
 
 public class PdfToTextResponseDto
 {

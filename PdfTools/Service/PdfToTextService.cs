@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Text.RegularExpressions;
-using iText.Kernel.Pdf;
+﻿using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using Microsoft.Extensions.Logging;
@@ -8,6 +6,8 @@ using PdfTools.Dto;
 using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Model;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace PdfTools.Service;
 
@@ -25,16 +25,17 @@ public class PdfToTextService : IPdfToTextService
         try
         {
             request.Validate();
-            
+
             var pdfBytes = Convert.FromBase64String(request.File);
             var pdfReader = new PdfReader(new System.IO.MemoryStream(pdfBytes));
             var pdfDocument = new PdfDocument(pdfReader);
+
             var textExtractionStrategy = new SimpleTextExtractionStrategy();
 
             var response = new PdfToTextResponseDto();
             for (var page = 1; page <= pdfDocument.GetNumberOfPages(); page++)
             {
-                var content = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(page),textExtractionStrategy);
+                var content = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(page), textExtractionStrategy);
                 if (!string.IsNullOrEmpty(content))
                 {
                     content = RemoveNonPrintableCharacters(content);
@@ -63,13 +64,13 @@ public class PdfToTextService : IPdfToTextService
             return new ResponseBaseModel(HttpStatusCode.BadRequest, "An error occurred while trying to convert");
         }
     }
-    
+
     private string RemoveNonPrintableCharacters(string input)
     {
         // Define uma regex para manter apenas caracteres imprimíveis típicos
         return Regex.Replace(input, @"[^\u0020-\u007E]+", string.Empty);
     }
-    
+
     private string RemoveBase64LikeStrings(string input)
     {
         // Define uma regex para detectar padrões que se parecem com base64

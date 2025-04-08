@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
-using PdfTools.Constant;
+﻿using PdfTools.Constant;
 using PdfTools.Extension;
+using System.Text;
 
 namespace PdfTools.Dto;
 
@@ -14,17 +13,17 @@ public class PdfToTextRequestDto
     {
         if (string.IsNullOrEmpty(File))
         {
-            throw new PdfToTextRequestException("File not found"); 
+            throw new PdfToTextRequestException("File not found");
         }
-        
+
         if (string.IsNullOrEmpty(Type))
         {
-            throw new PdfToTextRequestException("Type not found"); 
+            throw new PdfToTextRequestException("Type not found");
         }
-        
+
         if (Type != TypePdfToTextConstant.Base64 && Type != TypePdfToTextConstant.Url)
         {
-            throw new PdfToTextRequestException("Invalid type"); 
+            throw new PdfToTextRequestException("Invalid type");
         }
 
         if (Type == TypePdfToTextConstant.Url && !Uri.TryCreate(File, UriKind.Absolute, out var _))
@@ -41,9 +40,9 @@ public class PdfToTextRequestDto
 
         if (!IsBase64FileSizeUnderLimit(File))
         {
-            throw new PdfToTextRequestException("File size greater than 50MB"); 
+            throw new PdfToTextRequestException("File size greater than 50MB");
         }
-        
+
         var pdfBytes = Convert.FromBase64String(File);
 
         if (pdfBytes.Length < 5)
@@ -54,13 +53,13 @@ public class PdfToTextRequestDto
         var header = Encoding.ASCII.GetString(pdfBytes, 0, 4).Trim();
         var footer = Encoding.ASCII.GetString(pdfBytes, pdfBytes.Length - 5, 5).Trim();
 
-        var isValid =  header.ToUpper().Contains("PDF") && footer.ToUpper().Contains("EOF");
+        var isValid = header.ToUpper().Contains("PDF") && footer.ToUpper().Contains("EOF");
         if (!isValid)
         {
             throw new PdfToTextRequestException("File is not a valid PDF");
         }
     }
-    
+
     private bool IsBase64FileSizeUnderLimit(string base64String, int maxFileSizeInMB = 50)
     {
         long maxFileSizeInBytes = maxFileSizeInMB * 1024 * 1024;
