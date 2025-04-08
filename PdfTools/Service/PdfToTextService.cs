@@ -67,13 +67,11 @@ public class PdfToTextService : IPdfToTextService
 
     private string RemoveNonPrintableCharacters(string input)
     {
-        // Define uma regex para manter apenas caracteres imprimíveis típicos
         return Regex.Replace(input, @"[^\u0020-\u007E]+", string.Empty);
     }
 
     private string RemoveBase64LikeStrings(string input)
     {
-        // Define uma regex para detectar padrões que se parecem com base64
         return Regex.Replace(input, @"\b[A-Za-z0-9+/=]{20,}\b", string.Empty);
     }
 }

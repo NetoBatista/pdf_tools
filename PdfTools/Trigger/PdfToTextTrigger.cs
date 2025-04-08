@@ -17,7 +17,7 @@ namespace PdfTools.Trigger
         }
 
         [Function("PdfToText")]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
         {
             var request = await req.GetBody<PdfToTextRequestDto>();
             if (request == null)
