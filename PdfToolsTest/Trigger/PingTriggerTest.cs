@@ -9,7 +9,7 @@ namespace PdfToolsTest.Trigger;
 public class PingTriggerTest
 {
     [TestMethod("Should be ping")]
-    public async Task ConvertHtmlToPdfSuccess()
+    public void ConvertHtmlToPdfSuccess()
     {
         var request = new Mock<HttpRequest>();
         var route = new PingTrigger();

@@ -1,6 +1,6 @@
 ﻿using iText.Html2pdf;
 using Microsoft.Extensions.Logging;
-using PdfTools.Dto;
+using PdfTools.Dto.Render;
 using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Model;
@@ -8,16 +8,16 @@ using System.Net;
 
 namespace PdfTools.Service;
 
-public class HtmlToPdfService : IHtmlToPdfService
+public class RenderService : IRenderService
 {
-    private readonly ILogger<HtmlToPdfService> _logger;
+    private readonly ILogger<RenderService> _logger;
 
-    public HtmlToPdfService(ILogger<HtmlToPdfService> logger)
+    public RenderService(ILogger<RenderService> logger)
     {
         _logger = logger;
     }
 
-    public ResponseBaseModel Execute(HtmlToPdfRequestDto request)
+    public ResponseBaseModel Execute(RenderRequestDto request)
     {
         try
         {

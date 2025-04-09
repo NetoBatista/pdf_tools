@@ -2,7 +2,7 @@
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using Microsoft.Extensions.Logging;
-using PdfTools.Dto;
+using PdfTools.Dto.Transcript;
 using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Model;
@@ -11,16 +11,16 @@ using System.Text.RegularExpressions;
 
 namespace PdfTools.Service;
 
-public class PdfToTextService : IPdfToTextService
+public class TranscriptService : ITranscriptService
 {
-    private readonly ILogger<PdfToTextService> _logger;
+    private readonly ILogger<TranscriptService> _logger;
 
-    public PdfToTextService(ILogger<PdfToTextService> logger)
+    public TranscriptService(ILogger<TranscriptService> logger)
     {
         _logger = logger;
     }
 
-    public ResponseBaseModel Execute(PdfToTextRequestDto request)
+    public ResponseBaseModel Execute(TranscriptRequestDto request)
     {
         try
         {
@@ -32,7 +32,7 @@ public class PdfToTextService : IPdfToTextService
 
             var textExtractionStrategy = new SimpleTextExtractionStrategy();
 
-            var response = new PdfToTextResponseDto();
+            var response = new TranscriptResponseDto();
             for (var page = 1; page <= pdfDocument.GetNumberOfPages(); page++)
             {
                 var content = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(page), textExtractionStrategy);
@@ -40,7 +40,7 @@ public class PdfToTextService : IPdfToTextService
                 {
                     content = RemoveNonPrintableCharacters(content);
                     content = RemoveBase64LikeStrings(content);
-                    var item = new PdfToTextItemResponseDto(page, content);
+                    var item = new TranscriptItemResponseDto(page, content);
                     response.Items.Add(item);
                 }
             }

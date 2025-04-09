@@ -1,10 +1,10 @@
 ﻿using PdfTools.Extension;
 
-namespace PdfTools.Dto;
+namespace PdfTools.Dto.Transcript;
 
-public class PdfToTextItemResponseDto
+public class TranscriptItemResponseDto
 {
-    public PdfToTextItemResponseDto(int page, string content)
+    public TranscriptItemResponseDto(int page, string content)
     {
         if (string.IsNullOrEmpty(content))
         {

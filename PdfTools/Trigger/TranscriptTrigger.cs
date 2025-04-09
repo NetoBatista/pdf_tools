@@ -1,30 +1,30 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using PdfTools.Dto;
+using PdfTools.Dto.Transcript;
 using PdfTools.Extension;
 using PdfTools.Interface;
 
 namespace PdfTools.Trigger
 {
-    public class PdfToTextTrigger
+    public class TranscriptTrigger
     {
-        private readonly IPdfToTextService _pdfToTextService;
+        private readonly ITranscriptService _transcriptService;
 
-        public PdfToTextTrigger(IPdfToTextService pdfToTextService)
+        public TranscriptTrigger(ITranscriptService transcriptService)
         {
-            _pdfToTextService = pdfToTextService;
+            _transcriptService = transcriptService;
         }
 
-        [Function("PdfToText")]
+        [Function("Transcript")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
         {
-            var request = await req.GetBody<PdfToTextRequestDto>();
+            var request = await req.GetBody<TranscriptRequestDto>();
             if (request == null)
             {
                 return new BadRequestResult();
             }
-            var response = _pdfToTextService.Execute(request);
+            var response = _transcriptService.Execute(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return new OkObjectResult(response.Data);

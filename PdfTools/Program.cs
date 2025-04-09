@@ -8,8 +8,8 @@ var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
     .ConfigureServices(services =>
     {
-        services.AddTransient<IHtmlToPdfService, HtmlToPdfService>();
-        services.AddTransient<IPdfToTextService, PdfToTextService>();
+        services.AddTransient<IRenderService, RenderService>();
+        services.AddTransient<ITranscriptService, TranscriptService>();
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
     })

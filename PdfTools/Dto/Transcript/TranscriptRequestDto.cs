@@ -2,9 +2,9 @@
 using PdfTools.Extension;
 using System.Text;
 
-namespace PdfTools.Dto;
+namespace PdfTools.Dto.Transcript;
 
-public class PdfToTextRequestDto
+public class TranscriptRequestDto
 {
     public string File { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
@@ -21,17 +21,17 @@ public class PdfToTextRequestDto
             throw new PdfToTextRequestException("Type not found");
         }
 
-        if (Type != TypePdfToTextConstant.Base64 && Type != TypePdfToTextConstant.Url)
+        if (Type != PdfTypeConstant.Base64 && Type != PdfTypeConstant.Url)
         {
             throw new PdfToTextRequestException("Invalid type");
         }
 
-        if (Type == TypePdfToTextConstant.Url && !Uri.TryCreate(File, UriKind.Absolute, out var _))
+        if (Type == PdfTypeConstant.Url && !Uri.TryCreate(File, UriKind.Absolute, out var _))
         {
             throw new PdfToTextRequestException("Invalid url");
         }
 
-        if (Type == TypePdfToTextConstant.Url)
+        if (Type == PdfTypeConstant.Url)
         {
             var client = new HttpClient();
             var bytes = client.GetByteArrayAsync(File).Result;
@@ -63,7 +63,7 @@ public class PdfToTextRequestDto
     private bool IsBase64FileSizeUnderLimit(string base64String, int maxFileSizeInMB = 50)
     {
         long maxFileSizeInBytes = maxFileSizeInMB * 1024 * 1024;
-        long fileSizeInBytes = (long)(base64String.Length * 3 / 4);
+        long fileSizeInBytes = base64String.Length * 3 / 4;
         return fileSizeInBytes <= maxFileSizeInBytes;
     }
 }

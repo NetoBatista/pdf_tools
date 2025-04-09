@@ -1,8 +1,8 @@
 ﻿using PdfTools.Extension;
 
-namespace PdfTools.Dto;
+namespace PdfTools.Dto.Render;
 
-public class HtmlToPdfVariableRequestDto
+public class RenderVariableRequestDto
 {
     public string Name { get; set; } = string.Empty;
     public string Value { get; set; } = string.Empty;

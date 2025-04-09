@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using PdfTools.Dto;
+using PdfTools.Dto.Transcript;
 using PdfTools.Interface;
 using PdfTools.Model;
 using PdfTools.Trigger;
@@ -11,11 +11,11 @@ using System.Text;
 namespace PdfToolsTest.Trigger;
 
 [TestClass]
-public class PdfToTextTriggerTest
+public class TranscriptTriggerTest
 {
-    public PdfToTextTrigger CreateRoute(IPdfToTextService pdfToTextService)
+    public TranscriptTrigger CreateRoute(ITranscriptService pdfToTextService)
     {
-        return new PdfToTextTrigger(pdfToTextService);
+        return new TranscriptTrigger(pdfToTextService);
     }
 
     [TestMethod("Should be convert pdf to text")]
@@ -24,8 +24,8 @@ public class PdfToTextTriggerTest
         var request = new Mock<HttpRequest>();
         request.Setup(x => x.Body)
                .Returns(new MemoryStream(Encoding.UTF8.GetBytes("{}")));
-        var pdfToTextService = new Mock<IPdfToTextService>();
-        pdfToTextService.Setup(x => x.Execute(It.IsAny<PdfToTextRequestDto>()))
+        var pdfToTextService = new Mock<ITranscriptService>();
+        pdfToTextService.Setup(x => x.Execute(It.IsAny<TranscriptRequestDto>()))
                             .Returns(new ResponseBaseModel(HttpStatusCode.OK, Encoding.Unicode.GetBytes("abc")));
         var route = CreateRoute(pdfToTextService.Object);
         var response = await route.Run(request.Object);
@@ -38,8 +38,8 @@ public class PdfToTextTriggerTest
         var request = new Mock<HttpRequest>();
         request.Setup(x => x.Body)
                .Returns(new MemoryStream(Encoding.UTF8.GetBytes("{}")));
-        var htmlToPdfServiceMock = new Mock<IPdfToTextService>();
-        htmlToPdfServiceMock.Setup(x => x.Execute(It.IsAny<PdfToTextRequestDto>()))
+        var htmlToPdfServiceMock = new Mock<ITranscriptService>();
+        htmlToPdfServiceMock.Setup(x => x.Execute(It.IsAny<TranscriptRequestDto>()))
                             .Returns(new ResponseBaseModel(HttpStatusCode.BadRequest, "Error"));
         var route = CreateRoute(htmlToPdfServiceMock.Object);
         var response = await route.Run(request.Object);
