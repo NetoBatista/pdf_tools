@@ -1,4 +1,5 @@
 
+using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Service;
 
@@ -15,6 +16,17 @@ namespace PdfTools
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "*",
+                                  policy =>
+                                  {
+                                      policy.AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowAnyOrigin();
+                                  });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -24,10 +36,13 @@ namespace PdfTools
                 app.UseSwaggerUI();
             }
 
+            app.UseMiddleware<MiddlewareExtension>();
+
+            app.UseCors("*");
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
