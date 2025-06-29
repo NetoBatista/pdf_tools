@@ -1,9 +1,8 @@
 ﻿using iText.Html2pdf;
-using Microsoft.Extensions.Logging;
-using PdfTools.Dto.Render;
 using PdfTools.Extension;
 using PdfTools.Interface;
 using PdfTools.Model;
+using PdfTools.Model.Render;
 using System.Net;
 
 namespace PdfTools.Service;
@@ -17,11 +16,11 @@ public class RenderService : IRenderService
         _logger = logger;
     }
 
-    public ResponseBaseModel Execute(RenderRequestDto request)
+    public async Task<ResponseBaseModel> Execute(RenderRequestModel request)
     {
         try
         {
-            request.Validate();
+            await request.Validate();
 
             foreach (var variable in request.Variables)
             {
@@ -29,7 +28,7 @@ public class RenderService : IRenderService
                 request.Content = request.Content.Replace($"{{{variable.Name}}}", variable.Value);
             }
 
-            var response = new MemoryStream();
+            using var response = new MemoryStream();
             HtmlConverter.ConvertToPdf(request.Content, response);
             return new ResponseBaseModel(HttpStatusCode.OK, response.ToArray());
         }

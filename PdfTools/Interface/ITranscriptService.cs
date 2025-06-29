@@ -1,9 +1,9 @@
-﻿using PdfTools.Dto.Transcript;
-using PdfTools.Model;
+﻿using PdfTools.Model;
+using PdfTools.Model.Transcript;
 
 namespace PdfTools.Interface;
 
 public interface ITranscriptService
 {
-    ResponseBaseModel Execute(TranscriptRequestDto request);
+    Task<ResponseBaseModel> Execute(TranscriptRequestModel request);
 }

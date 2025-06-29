@@ -1,9 +1,9 @@
-﻿using PdfTools.Dto.Render;
-using PdfTools.Model;
+﻿using PdfTools.Model;
+using PdfTools.Model.Render;
 
 namespace PdfTools.Interface;
 
 public interface IRenderService
 {
-    ResponseBaseModel Execute(RenderRequestDto request);
+    Task<ResponseBaseModel> Execute(RenderRequestModel request);
 }

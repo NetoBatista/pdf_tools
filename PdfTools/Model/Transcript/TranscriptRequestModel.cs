@@ -2,14 +2,14 @@
 using PdfTools.Extension;
 using System.Text;
 
-namespace PdfTools.Dto.Transcript;
+namespace PdfTools.Model.Transcript;
 
-public class TranscriptRequestDto
+public class TranscriptRequestModel
 {
     public string File { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
 
-    public void Validate()
+    public Task Validate()
     {
         if (string.IsNullOrEmpty(File))
         {
@@ -58,6 +58,8 @@ public class TranscriptRequestDto
         {
             throw new PdfToTextRequestException("File is not a valid PDF");
         }
+
+        return Task.CompletedTask;
     }
 
     private bool IsBase64FileSizeUnderLimit(string base64String, int maxFileSizeInMB = 50)
